@@ -29,7 +29,7 @@
             color: #343a40;
         }
 
-        .accordion {
+        .carousel {
             width: 800px;
             position: relative;
             margin: 100px auto;
@@ -47,6 +47,12 @@
             border-radius: 8px;
             transform: scale(1.5);
             box-shadow: 0 12px 24px rgba(0, 0, 0, .25);
+        }
+
+        .testimonial-text,
+        .testimonial-author,
+        .testimonial-job {
+            transition: all 1.25s ease-out;
         }
 
         .testimonial-text {
@@ -128,7 +134,7 @@
 </head>
 
 <body>
-    <div class="accordion">
+    <div class="carousel">
         <img src="./maria.jpg" alt="A Women">
         <blockquote class="testimonial">
             <p class="testimonial-text">"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Mollitia laudantium
@@ -136,6 +142,20 @@
                 modi alias, officiis magnam iusto!"</p>
             <p class="testimonial-author">Maria De Almeida</p>
             <p class="testimonial-job">Senior Product Manager at EDP Commercial</p>
+        </blockquote>
+        <blockquote class="testimonial" style="display: none;">
+            <p class="testimonial-text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vestibulum urna
+                eget massa tincidunt, eget vestibulum felis placerat. In condimentum neque at neque eleifend, ut varius
+                lorem hendrerit. Suspendisse potenti."</p>
+            <p class="testimonial-author">John Smith</p>
+            <p class="testimonial-job">Software Engineer at ABC Company</p>
+        </blockquote>
+        <blockquote class="testimonial" style="display: none;">
+            <p class="testimonial-text">"Nulla facilisi. Etiam auctor elit vel eleifend tincidunt. Morbi ultricies
+                sollicitudin mi in vehicula. Aenean vitae nisl velit. Donec finibus nunc vel metus tristique, sed
+                maximus felis gravida."</p>
+            <p class="testimonial-author">Jane Doe</p>
+            <p class="testimonial-job">Marketing Manager at XYZ Corporation</p>
         </blockquote>
         <button class="btn btn--left">
             <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -153,9 +173,65 @@
             <button class="dot dot--fill">&nbsp;</button>
             <button class="dot">&nbsp;</button>
             <button class="dot">&nbsp;</button>
-            <button class="dot">&nbsp;</button>
         </div>
     </div>
+    <script>
+        // Get all the necessary elements
+        const carousel = document.querySelector('.carousel');
+        const slides = carousel.querySelectorAll('.testimonial');
+        const prevBtn = carousel.querySelector('.btn--left');
+        const nextBtn = carousel.querySelector('.btn--right');
+        const dots = carousel.querySelectorAll('.dot');
+
+        let currentIndex = 0;
+
+        // Function to show the current slide
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.style.display = 'block';
+                    dots[i].classList.add('dot--fill');
+                } else {
+                    slide.style.display = 'none';
+                    dots[i].classList.remove('dot--fill');
+                }
+            });
+        }
+
+        // Function to navigate to the previous slide
+        function goToPrevSlide() {
+            currentIndex--;
+            if (currentIndex < 0) {
+                currentIndex = slides.length - 1;
+            }
+            showSlide(currentIndex);
+        }
+
+        // Function to navigate to the next slide
+        function goToNextSlide() {
+            currentIndex++;
+            if (currentIndex >= slides.length) {
+                currentIndex = 0;
+            }
+            showSlide(currentIndex);
+        }
+
+        // Event listeners for previous and next buttons
+        prevBtn.addEventListener('click', goToPrevSlide);
+        nextBtn.addEventListener('click', goToNextSlide);
+
+        // Event listeners for dot buttons
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                showSlide(currentIndex);
+            });
+        });
+
+        // Show the initial slide
+        showSlide(currentIndex);
+
+    </script>
 </body>
 
 </html>
